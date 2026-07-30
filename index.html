@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rosana Demicheli - Imóveis por Temporada | CRECI/SC 48.291-F</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar & Utility styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0d1b2a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #f59e0b;
+    }
+    .modal-backdrop {
+      background-color: rgba(13, 27, 42, 0.85);
+      backdrop-filter: blur(8px);
+    }
+  </style>
+</head>
+<body class="bg-[#0d1b2a] text-slate-100 font-sans antialiased selection:bg-amber-500 selection:text-slate-950 min-h-screen">
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="sticky top-0 z-40 bg-[#0d1b2a]/90 backdrop-blur-md border-b border-white/10 shadow-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo & CRECI -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-serif font-black text-xl shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
+          RD
+        </div>
+        <div>
+          <span class="block text-base sm:text-lg font-serif font-bold text-white leading-tight group-hover:text-amber-400 transition-colors">
+            Rosana Demicheli
+          </span>
+          <span class="block text-[11px] font-semibold text-amber-400 uppercase tracking-wider">
+            CRECI/SC 48.291-F • Temporada
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Links -->
+      <nav class="hidden lg:flex items-center gap-6 text-xs font-semibold tracking-widest uppercase text-slate-300">
+        <a href="#imoveis" class="hover:text-amber-400 transition-colors py-1">Imóveis</a>
+        <a href="#sobre" class="hover:text-amber-400 transition-colors py-1">Sobre Rosana</a>
+        <a href="#orcamento" class="hover:text-amber-400 transition-colors py-1">Orçamento</a>
+        <a href="#duvidas" class="hover:text-amber-400 transition-colors py-1">Dúvidas & Regras</a>
+      </nav>
+
+      <!-- Header Action Buttons -->
+      <div class="hidden sm:flex items-center gap-3">
+        <button
+          onclick="openAdminModal()"
+          class="inline-flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs tracking-wider uppercase rounded-full shadow-lg shadow-amber-500/20 transition-all hover:-translate-y-0.5 cursor-pointer border border-amber-300/50"
+          title="Área restrita da corretora"
+        >
+          <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+          <span>Área da Corretora</span>
+        </button>
+
+        <a
+          id="navbar-wa-btn"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-5 py-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-xs tracking-wider uppercase rounded-full backdrop-blur-md shadow-lg transition-all hover:-translate-y-0.5"
+        >
+          <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
+          <span>Falar no WhatsApp</span>
+        </a>
+      </div>
+
+      <!-- Mobile Action Buttons -->
+      <div class="flex sm:hidden items-center gap-2">
+        <button
+          onclick="openAdminModal()"
+          class="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 text-slate-950 font-bold text-[11px] uppercase rounded-full shadow-md cursor-pointer"
+        >
+          <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+          <span>Corretora</span>
+        </button>
+
+        <button
+          onclick="toggleMobileMenu()"
+          class="p-2 rounded-xl text-slate-200 hover:bg-white/10 transition-colors border border-white/10"
+          aria-label="Menu"
+        >
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden lg:hidden border-t border-white/10 bg-[#0d1b2a] px-4 py-4 space-y-3">
+      <a href="#imoveis" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-amber-400 text-sm font-semibold uppercase">🏖️ Ver Imóveis</a>
+      <a href="#sobre" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-amber-400 text-sm font-semibold uppercase">👩‍💼 Sobre Rosana</a>
+      <a href="#orcamento" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-amber-400 text-sm font-semibold uppercase">💬 Solicitar Orçamento</a>
+      <a href="#duvidas" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-amber-400 text-sm font-semibold uppercase">❓ Dúvidas & Regras</a>
+      <button onclick="toggleMobileMenu(); openAdminModal()" class="w-full text-left py-2 text-amber-400 font-bold text-sm uppercase flex items-center gap-2 border-t border-white/10 pt-3">
+        <i data-lucide="lock" class="w-4 h-4"></i>
+        <span>🔐 Área da Corretora (Gestão)</span>
+      </button>
+    </div>
+  </header>
+
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden py-16 px-4">
+    <!-- Background Image Overlay -->
+    <div class="absolute inset-0 z-0">
+      <img
+        src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1920&q=80"
+        alt="Litoral de Bombinhas SC"
+        class="w-full h-full object-cover object-center scale-105"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-[#0d1b2a] via-[#0d1b2a]/80 to-[#0d1b2a]/60"></div>
+    </div>
+
+    <div class="relative z-10 max-w-5xl mx-auto text-center space-y-8">
+      
+      <!-- CRECI Badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-400/30 text-amber-300 text-xs font-semibold tracking-wider uppercase backdrop-blur-md">
+        <i data-lucide="shield-check" class="w-4 h-4 text-amber-400"></i>
+        <span>Atendimento Jurídico Seguro • CRECI/SC 48.291-F</span>
+      </div>
+
+      <!-- Headline -->
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-serif font-bold text-white tracking-tight leading-tight max-w-4xl mx-auto">
+        Sua Estadia dos Sonhos no Litoral Catarinense com Total Segurança
+      </h1>
+
+      <p class="text-base sm:text-lg text-slate-300 font-normal max-w-2xl mx-auto leading-relaxed">
+        Aluguel de temporada em Bombinhas, Mariscal, Quatro Ilhas, Itapema e região. Coberturas, casas com piscina e apartamentos pé na areia vistoriados e higienizados.
+      </p>
+
+      <!-- Direct Search Bar -->
+      <div class="max-w-3xl mx-auto bg-white/10 backdrop-blur-xl border border-white/20 p-3 rounded-2xl sm:rounded-full shadow-2xl flex flex-col sm:flex-row items-center gap-3">
+        <div class="flex-1 w-full flex items-center gap-3 px-4 py-2">
+          <i data-lucide="search" class="w-5 h-5 text-amber-400 flex-shrink-0"></i>
+          <input
+            id="hero-search-input"
+            type="text"
+            placeholder="Buscar por praia, cidade, ref (ex: REF-101 ou Mariscal)..."
+            oninput="handleSearch(this.value)"
+            class="w-full bg-transparent text-white placeholder-slate-400 text-sm focus:outline-none"
+          />
+        </div>
+        <a
+          href="#imoveis"
+          class="w-full sm:w-auto px-6 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-full transition-all shadow-lg shadow-amber-500/20 text-center flex items-center justify-center gap-2"
+        >
+          <span>Explorar Imóveis</span>
+          <i data-lucide="arrow-down" class="w-4 h-4"></i>
+        </a>
+      </div>
+
+      <!-- Key Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 max-w-4xl mx-auto text-left">
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+          <span class="block text-2xl font-serif font-bold text-amber-400">100%</span>
+          <span class="text-xs text-slate-300 font-medium">Contratos Verificados</span>
+        </div>
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+          <span class="block text-2xl font-serif font-bold text-amber-400">+12 Anos</span>
+          <span class="text-xs text-slate-300 font-medium">de Experiência</span>
+        </div>
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+          <span class="block text-2xl font-serif font-bold text-amber-400">Vistoria</span>
+          <span class="text-xs text-slate-300 font-medium">Pré-Checkin Garantida</span>
+        </div>
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+          <span class="block text-2xl font-serif font-bold text-amber-400">Suporte 24h</span>
+          <span class="text-xs text-slate-300 font-medium">Durante sua Estadia</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= MAIN PROPERTY GRID SECTION ================= -->
+  <section id="imoveis" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    
+    <!-- Section Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-white/10">
+      <div>
+        <div class="inline-flex items-center gap-2 text-amber-400 font-semibold text-xs tracking-widest uppercase mb-2">
+          <i data-lucide="map-pin" class="w-4 h-4"></i>
+          <span>Catálogo de Imóveis para Locação</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white">
+          Opções Exclusivas em Destaque
+        </h2>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div id="category-filters" class="flex flex-wrap items-center gap-2">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- Properties Grid -->
+    <div id="properties-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Property Cards Rendered dynamically by JS -->
+    </div>
+  </section>
+
+
+  <!-- ================= ABOUT ROSANA SECTION ================= -->
+  <section id="sobre" class="py-20 bg-slate-900/60 border-y border-white/10 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- Profile Card -->
+      <div class="lg:col-span-5 relative">
+        <div class="relative rounded-3xl overflow-hidden border border-amber-400/30 shadow-2xl bg-slate-950">
+          <img
+            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80"
+            alt="Rosana Demicheli - Corretora de Imóveis"
+            class="w-full h-[480px] object-cover object-top"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+          <div class="absolute bottom-6 left-6 right-6 p-6 rounded-2xl bg-slate-900/90 border border-white/10 backdrop-blur-md">
+            <h3 class="text-xl font-serif font-bold text-white">Rosana Demicheli</h3>
+            <p class="text-xs font-semibold text-amber-400 uppercase tracking-wider mt-0.5">CRECI/SC 48.291-F</p>
+            <p class="text-xs text-slate-300 mt-2">Especialista em Atendimento de Alto Padrão no Litoral de Santa Catarina.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="lg:col-span-7 space-y-6">
+        <div class="inline-flex items-center gap-2 text-amber-400 font-semibold text-xs tracking-widest uppercase">
+          <i data-lucide="shield-check" class="w-4 h-4"></i>
+          <span>Atendimento Personalizado & Transparência</span>
+        </div>
+
+        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white leading-tight">
+          Segurança, Conforto e Férias Inesquecíveis para a Sua Família
+        </h2>
+
+        <p id="broker-bio" class="text-slate-300 text-sm leading-relaxed">
+          <!-- Populated from BROKER_INFO.bio -->
+        </p>
+
+        <!-- Highlights Grid -->
+        <div id="broker-highlights" class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+          <!-- Populated from BROKER_INFO.highlights -->
+        </div>
+
+        <div class="pt-4 flex flex-wrap items-center gap-4">
+          <a
+            id="about-wa-btn"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-6 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider rounded-full shadow-lg shadow-emerald-600/20 transition-all cursor-pointer"
+          >
+            <i data-lucide="message-circle" class="w-4 h-4"></i>
+            <span>Consultar Imóveis Disponíveis</span>
+          </a>
+
+          <button
+            onclick="openAdminModal()"
+            class="inline-flex items-center gap-2 px-6 py-3.5 bg-white/10 hover:bg-white/20 border border-white/20 text-amber-400 font-bold text-xs uppercase tracking-wider rounded-full transition-all cursor-pointer"
+          >
+            <i data-lucide="lock" class="w-4 h-4 text-amber-400"></i>
+            <span>Portal do Corretor</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= INQUIRY / BUDGET FORM SECTION ================= -->
+  <section id="orcamento" class="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+    <div class="bg-gradient-to-br from-slate-900 to-[#0d1b2a] border border-amber-400/30 p-8 sm:p-12 rounded-3xl shadow-2xl relative overflow-hidden">
+      
+      <div class="max-w-2xl mx-auto text-center space-y-4 mb-8">
+        <div class="inline-flex items-center gap-2 text-amber-400 font-semibold text-xs tracking-widest uppercase">
+          <i data-lucide="calendar" class="w-4 h-4"></i>
+          <span>Orçamento Rápido e Direto</span>
+        </div>
+        <h2 class="text-3xl font-serif font-bold text-white">
+          Solicitar Cotação de Período
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-300">
+          Informe as suas datas preferidas e número de hóspedes para receber os valores exatos e disponibilidade atualizada direto no WhatsApp da Rosana Demicheli.
+        </p>
+      </div>
+
+      <form id="inquiry-form" onsubmit="handleInquirySubmit(event)" class="space-y-6 max-w-3xl mx-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Imóvel de Interesse</label>
+            <select
+              id="inquiry-property-select"
+              class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white text-xs focus:border-amber-400 outline-none"
+            >
+              <option value="" class="bg-slate-900 text-slate-300">Todas as Opções / Qualquer Imóvel</option>
+              <!-- Populated by JS -->
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Número de Hóspedes</label>
+            <input
+              id="inquiry-guests"
+              type="number"
+              min="1"
+              max="20"
+              value="4"
+              class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white text-xs focus:border-amber-400 outline-none"
+            />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Data de Entrada (Check-in)</label>
+            <input
+              id="inquiry-checkin"
+              type="date"
+              class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white text-xs focus:border-amber-400 outline-none"
+            />
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Data de Saída (Check-out)</label>
+            <input
+              id="inquiry-checkout"
+              type="date"
+              class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white text-xs focus:border-amber-400 outline-none"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Observações / Dúvidas Especiais (Opcional)</label>
+          <textarea
+            id="inquiry-notes"
+            rows="3"
+            placeholder="Ex: Preciso de vaga extra, tenho pet de pequeno porte, prefiro andar baixo..."
+            class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white text-xs focus:border-amber-400 outline-none resize-none"
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-widest rounded-2xl transition-all shadow-xl shadow-emerald-600/20 flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <i data-lucide="message-circle" class="w-5 h-5"></i>
+          <span>Enviar Pedido de Orçamento no WhatsApp</span>
+        </button>
+      </form>
+
+    </div>
+  </section>
+
+
+  <!-- ================= FAQ SECTION ================= -->
+  <section id="duvidas" class="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+    <div class="text-center space-y-3 mb-12">
+      <div class="inline-flex items-center gap-2 text-amber-400 font-semibold text-xs tracking-widest uppercase">
+        <i data-lucide="help-circle" class="w-4 h-4"></i>
+        <span>Tire Suas Dúvidas</span>
+      </div>
+      <h2 class="text-3xl font-serif font-bold text-white">
+        Perguntas Frequentes & Regras de Locação
+      </h2>
+      <p class="text-xs text-slate-300">
+        Informações importantes sobre prazos, normas de condomínio e procedimentos de reserva.
+      </p>
+    </div>
+
+    <div id="faq-accordion" class="space-y-4">
+      <!-- Populated by JS -->
+    </div>
+  </section>
+
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-slate-950 border-t border-white/10 pt-16 pb-12 px-4 sm:px-6 lg:px-8 text-slate-400 text-xs">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/10">
+      
+      <!-- Col 1: Brand -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center text-slate-950 font-serif font-black text-xl">
+            RD
+          </div>
+          <div>
+            <span class="block text-base font-serif font-bold text-white">Rosana Demicheli</span>
+            <span class="block text-[10px] font-semibold text-amber-400 uppercase">CRECI/SC 48.291-F</span>
+          </div>
+        </div>
+        <p class="text-slate-400 leading-relaxed text-xs">
+          Corretora de Imóveis especializada na locação de imóveis por temporada nas praias mais procuradas do litoral catarinense.
+        </p>
+      </div>
+
+      <!-- Col 2: Quick Links -->
+      <div class="space-y-3">
+        <h4 class="text-white font-serif font-bold text-sm uppercase tracking-wider">Navegação</h4>
+        <ul class="space-y-2">
+          <li><a href="#imoveis" class="hover:text-amber-400 transition-colors">Catálogo de Imóveis</a></li>
+          <li><a href="#sobre" class="hover:text-amber-400 transition-colors">Sobre a Corretora</a></li>
+          <li><a href="#orcamento" class="hover:text-amber-400 transition-colors">Solicitar Orçamento</a></li>
+          <li><a href="#duvidas" class="hover:text-amber-400 transition-colors">Perguntas Frequentes</a></li>
+          <li class="pt-2">
+            <button onclick="openAdminModal()" class="text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1.5 cursor-pointer">
+              <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+              <span>Área Restrita do Corretor</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Regions -->
+      <div class="space-y-3">
+        <h4 class="text-white font-serif font-bold text-sm uppercase tracking-wider">Regiões Atendidas</h4>
+        <ul class="space-y-1.5 text-slate-400">
+          <li>• Praia de Bombinhas (SC)</li>
+          <li>• Praia de Mariscal (SC)</li>
+          <li>• Praia de Quatro Ilhas (SC)</li>
+          <li>• Canto Grande & Zimbros (SC)</li>
+          <li>• Itapema & Meia Praia (SC)</li>
+          <li>• Ubatuba (SP)</li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Contact -->
+      <div class="space-y-3">
+        <h4 class="text-white font-serif font-bold text-sm uppercase tracking-wider">Contato Direto</h4>
+        <p class="flex items-center gap-2">
+          <i data-lucide="phone" class="w-4 h-4 text-amber-400"></i>
+          <span>(12) 99719-6397</span>
+        </p>
+        <p class="flex items-center gap-2">
+          <i data-lucide="mail" class="w-4 h-4 text-amber-400"></i>
+          <span>rosanademicheli.temporada@gmail.com</span>
+        </p>
+        <p class="flex items-center gap-2">
+          <i data-lucide="instagram" class="w-4 h-4 text-amber-400"></i>
+          <span>@rosanademicheli.temporada</span>
+        </p>
+        <p class="flex items-start gap-2 pt-1 text-[11px] text-slate-400">
+          <i data-lucide="map-pin" class="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5"></i>
+          <span>Av. Ver. Manoel José dos Santos, 1200 - Centro, Bombinhas - SC</span>
+        </p>
+      </div>
+
+    </div>
+
+    <div class="max-w-7xl mx-auto pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-400">
+      <p>© 2026 Rosana Demicheli - Corretora de Imóveis (CRECI/SC 48.291-F). Todos os direitos reservados.</p>
+      <p>Desenvolvido para Gestão Transparente de Temporada</p>
+    </div>
+  </footer>
+
+
+  <!-- ================= FLOATING WHATSAPP BUTTON ================= -->
+  <a
+    id="floating-wa-btn"
+    href="#"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="fixed bottom-6 right-6 z-40 bg-emerald-500 hover:bg-emerald-400 text-slate-950 p-4 rounded-full shadow-2xl flex items-center justify-center transition-transform hover:scale-110 group cursor-pointer border-2 border-emerald-300/50"
+    title="Falar com Rosana Demicheli no WhatsApp"
+  >
+    <i data-lucide="message-circle" class="w-7 h-7 text-slate-950 fill-slate-950"></i>
+    <span class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-amber-400 rounded-full animate-ping"></span>
+    <span class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-amber-400 rounded-full"></span>
+  </a>
+
+
+  <!-- ================= PROPERTY DETAILS MODAL ================= -->
+  <div id="property-modal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-[#0d1b2a] border border-white/20 w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden my-8 max-h-[90vh] flex flex-col">
+      
+      <!-- Modal Header -->
+      <div class="p-6 border-b border-white/10 flex items-center justify-between bg-slate-900/80">
+        <div>
+          <span id="modal-prop-code" class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-400 font-mono text-xs font-bold uppercase">
+            REF-101
+          </span>
+          <h3 id="modal-prop-title" class="text-xl font-serif font-bold text-white mt-1">
+            Título do Imóvel
+          </h3>
+          <p id="modal-prop-location" class="text-xs text-slate-400">Localização</p>
+        </div>
+
+        <button
+          onclick="closePropertyModal()"
+          class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+        >
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 overflow-y-auto space-y-6 flex-1 text-xs">
+        
+        <!-- Image Viewer & Gallery -->
+        <div class="space-y-3">
+          <div class="rounded-2xl overflow-hidden aspect-video bg-slate-950 border border-white/10 relative">
+            <img id="modal-main-image" src="" alt="Foto Principal" class="w-full h-full object-cover" />
+          </div>
+          <div id="modal-thumbnails" class="flex gap-2 overflow-x-auto pb-2">
+            <!-- Thumbnails rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Specifications Badges -->
+        <div id="modal-specs" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+          <!-- Specs rendered by JS -->
+        </div>
+
+        <!-- Description -->
+        <div class="space-y-2">
+          <h4 class="font-serif font-bold text-amber-400 uppercase text-xs">Sobre o Imóvel</h4>
+          <p id="modal-description" class="text-slate-300 leading-relaxed text-xs">
+            Descrição detalhada do imóvel.
+          </p>
+        </div>
+
+        <!-- Amenities -->
+        <div class="space-y-2">
+          <h4 class="font-serif font-bold text-amber-400 uppercase text-xs">Comodidades e Diferenciais</h4>
+          <div id="modal-amenities" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+            <!-- Amenities rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Rates Table -->
+        <div class="space-y-2">
+          <h4 class="font-serif font-bold text-amber-400 uppercase text-xs">Tabela Estimativa de Diárias</h4>
+          <div id="modal-rates-table" class="bg-white/5 border border-white/10 rounded-2xl p-4">
+            <!-- Rates table rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Rules -->
+        <div class="space-y-2">
+          <h4 class="font-serif font-bold text-amber-400 uppercase text-xs">Regras e Horários</h4>
+          <ul id="modal-rules-list" class="space-y-1 text-slate-300 list-disc list-inside">
+            <!-- Rules rendered by JS -->
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer CTA -->
+      <div class="p-4 border-t border-white/10 bg-slate-900/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <span class="block text-[11px] text-slate-400">Consulte datas para valor exato:</span>
+          <span id="modal-footer-price" class="text-lg font-bold text-amber-400">A partir de R$ 000 / noite</span>
+        </div>
+
+        <a
+          id="modal-wa-booking-btn"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="w-full sm:w-auto px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg flex items-center justify-center gap-2"
+        >
+          <i data-lucide="message-circle" class="w-4 h-4"></i>
+          <span>Reservar no WhatsApp</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ================= ADMIN PORTAL MODAL ================= -->
+  <div id="admin-modal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-[#0d1b2a] border border-amber-400/40 w-full max-w-5xl rounded-3xl shadow-2xl overflow-hidden my-8 max-h-[92vh] flex flex-col">
+      
+      <!-- Admin Header -->
+      <div class="p-6 border-b border-white/10 flex items-center justify-between bg-slate-900">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-400 flex items-center justify-center">
+            <i data-lucide="lock" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-serif font-bold text-white">Área da Corretora (Gestão)</h3>
+            <p class="text-xs text-amber-400">Portal Restrito Rosana Demicheli</p>
+          </div>
+        </div>
+
+        <button
+          onclick="closeAdminModal()"
+          class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+        >
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+      <!-- Admin Body: Login View OR Dashboard View -->
+      <div id="admin-modal-body" class="p-6 overflow-y-auto flex-1">
+        <!-- Rendered by JS -->
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ================= JAVASCRIPT APP ENGINE ================= -->
+  <script>
+    // Broker Default Configuration
+    const BROKER_INFO = {
+      name: "Rosana Demicheli",
+      title: "Corretora de Imóveis por Temporada",
+      creci: "CRECI/SC 48.291-F",
+      phone: "(12) 99719-6397",
+      whatsappNumber: "5512997196397",
+      email: "rosanademicheli.temporada@gmail.com",
+      instagram: "@rosanademicheli.temporada",
+      bio: "Especialista em locação por temporada de alto padrão no litoral. Meu compromisso é proporcionar férias inesquecíveis para a sua família com transparência, segurança jurídica nos contratos, imóveis rigorosamente vistoriados e atendimento humanizado antes, durante e após a sua estadia.",
+      highlights: [
+        { title: "Contratos Seguros", description: "Documentação transparente com emissão de recibos e garantias legais." },
+        { title: "Vistoria Prévia", description: "Imóveis higienizados, equipados e prontos para receber sua família." },
+        { title: "Check-in Presencial", description: "Recepção dedicada com entrega de chaves e orientações da região." },
+        { title: "Suporte 24h", description: "Assistência direta para emergências e dúvidas durante a sua estadia." }
+      ]
+    };
+
+    const INITIAL_PROPERTIES = [
+      {
+        id: "prop-101",
+        code: "REF-101",
+        title: "Cobertura Duplex de Luxo com Vista Panorâmica para o Mar",
+        subtitle: "Terraço privativo com jacuzzi, churrasqueira a carvão e vista espetacular para toda a orla.",
+        category: "Cobertura",
+        tag: "Frente ao Mar",
+        city: "Bombinhas - SC",
+        neighborhood: "Praia de Mariscal",
+        distanceToBeach: "Pé na Areia (0m do mar)",
+        maxGuests: 10,
+        bedrooms: 4,
+        suites: 3,
+        bathrooms: 4,
+        parkingSpaces: 3,
+        areaM2: 220,
+        featured: true,
+        images: [
+          "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80"
+        ],
+        description: "Espetacular cobertura duplex localizada no ponto mais nobre da Praia de Mariscal. O imóvel oferece acabamento de altíssimo padrão, área gourmet integrada com churrasqueira no piso superior, hidromassagem privativa com vista total para o mar, além de ambientes amplos e totalmente climatizados.",
+        amenities: [
+          "Vista Panorâmica pro Mar",
+          "Pé na Areia",
+          "Hidromassagem / Jacuzzi",
+          "Ar Condicionado em Todos Ambientes",
+          "Churrasqueira a Carvão",
+          "Wi-Fi de Alta Velocidade",
+          "Varanda Gourmet",
+          "Elevador Privativo",
+          "Garagem Coberta (3 vagas)"
+        ],
+        rates: { lowSeason: 850, midSeason: 1200, highSeason: 1950, reveillon: 2800, cleaningFee: 350 },
+        rules: [
+          "Horário de Check-in: a partir das 14h00 | Check-out: até às 10h00",
+          "Capacidade máxima permitida: 10 pessoas (incluindo crianças)",
+          "Proibido festas ou som alto após 22h"
+        ]
+      },
+      {
+        id: "prop-102",
+        code: "REF-102",
+        title: "Casa Triplex de Alto Padrão com Piscina e Espaço Gourmet",
+        subtitle: "Residência privativa a 50m da praia com piscina iluminada, churrasqueira e mesa de sinuca.",
+        category: "Casa",
+        tag: "Piscina Privativa",
+        city: "Bombinhas - SC",
+        neighborhood: "Praia de Bombas",
+        distanceToBeach: "50 metros da praia",
+        maxGuests: 12,
+        bedrooms: 5,
+        suites: 3,
+        bathrooms: 5,
+        parkingSpaces: 4,
+        areaM2: 310,
+        featured: true,
+        images: [
+          "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80"
+        ],
+        description: "Impressionante casa de praia triplex projetada para receber grandes famílias com total comodidade e segurança. Conta com ampla piscina no quintal privativo, salão de festas com churrasqueira gourmet, salão de jogos com sinuca e localização privilegiada no centro.",
+        amenities: [
+          "Piscina Privativa Iluminada",
+          "Apenas 50m do Mar",
+          "Salão de Jogos com Sinuca",
+          "Espaço Gourmet com Churrasqueira",
+          "Ar Condicionado Split",
+          "Wi-Fi Fibra 500 Mega",
+          "Aceita Pets de Pequeno Porte",
+          "Garagem para 4 Carros"
+        ],
+        rates: { lowSeason: 1100, midSeason: 1600, highSeason: 2400, reveillon: 3500, cleaningFee: 400 },
+        rules: [
+          "Check-in: 15h00 | Check-out: 10h00",
+          "Capacidade até 12 hóspedes",
+          "Aceita 1 Pet pequeno com aviso prévio"
+        ]
+      },
+      {
+        id: "prop-204",
+        code: "REF-204",
+        title: "Apartamento Moderno Pé na Areia com Sacada Gourmet",
+        subtitle: "Sacada envidraçada rebaixada com churrasqueira e vista frontal para o mar de Quatro Ilhas.",
+        category: "Apartamento",
+        tag: "Frente ao Mar",
+        city: "Bombinhas - SC",
+        neighborhood: "Praia de Quatro Ilhas",
+        distanceToBeach: "Pé na Areia (Edifício Beira-Mar)",
+        maxGuests: 8,
+        bedrooms: 3,
+        suites: 3,
+        bathrooms: 4,
+        parkingSpaces: 2,
+        areaM2: 135,
+        featured: true,
+        images: [
+          "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80"
+        ],
+        description: "Lindo apartamento pé na areia com acesso direto ao calçadão e praia de Quatro Ilhas. Decoração contemporânea, móveis planejados de excelente qualidade, 3 suítes amplas e maravilhosa sacada envidraçada.",
+        amenities: [
+          "Edifício Pé na Areia",
+          "Sacada Gourmet Envidraçada",
+          "3 Suítes Climatizadas",
+          "Churrasqueira a Carvão",
+          "Wi-Fi Fibra",
+          "Elevador e Portaria 24h",
+          "2 Vagas de Garagem Privativas"
+        ],
+        rates: { lowSeason: 680, midSeason: 950, highSeason: 1550, reveillon: 2200, cleaningFee: 300 },
+        rules: [
+          "Check-in: 14h00 | Check-out: 10h00",
+          "Capacidade: 8 pessoas",
+          "Não aceita pets"
+        ]
+      },
+      {
+        id: "prop-305",
+        code: "REF-305",
+        title: "Sobrado Aconchegante a 100m da Praia com Pátio Privativo",
+        subtitle: "Ótima opção familiar com churrasqueira privativa, pátio fechado e excelente custo-benefício.",
+        category: "Sobrado",
+        tag: "Ótimo Preço",
+        city: "Bombinhas - SC",
+        neighborhood: "Canto Grande (Mar de Dentro)",
+        distanceToBeach: "100 metros da praia",
+        maxGuests: 6,
+        bedrooms: 2,
+        suites: 1,
+        bathrooms: 2,
+        parkingSpaces: 2,
+        areaM2: 95,
+        featured: false,
+        images: [
+          "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80"
+        ],
+        description: "Sobrado aconchegante e funcional em rua tranquila no Canto Grande. Próximo ao Mar de Dentro (mar calmo sem ondas, perfeito para crianças). Possui quintal fechado com espaço para veículos.",
+        amenities: [
+          "Apenas 100m do Mar de Dentro",
+          "Churrasqueira Privativa",
+          "Pátio Fechado e Seguro",
+          "Ar Condicionado nos Quartos",
+          "Wi-Fi Gratuito",
+          "Aceita Pets de Pequeno Porte"
+        ],
+        rates: { lowSeason: 420, midSeason: 600, highSeason: 980, reveillon: 1450, cleaningFee: 250 },
+        rules: [
+          "Check-in: 14h00 | Check-out: 10h00",
+          "Capacidade: 6 pessoas",
+          "Pet friendly"
+        ]
+      }
+    ];
+
+    const FAQS = [
+      {
+        q: "Como funciona o processo de reserva por temporada?",
+        a: "Após escolher o imóvel e confirmar a disponibilidade de datas com a Rosana Demicheli pelo WhatsApp, enviamos o contrato de locação por temporada. A garantia da reserva é feita mediante sinal de 30% a 50% via PIX ou transferência, e o saldo restante é quitado na entrega das chaves no check-in."
+      },
+      {
+        q: "Quais são os horários padrão de check-in e check-out?",
+        a: "O horário padrão de Check-in é a partir das 14:00h e o Check-out até as 10:00h. Caso necessite de flexibilidade (early check-in ou late check-out), consulte previamente com a Rosana."
+      },
+      {
+        q: "Os imóveis oferecem roupa de cama e banho?",
+        a: "A maioria dos nossos imóveis disponibiliza travesseiros e protetores de colchão. Quanto aos jogos de cama e toalhas de banho, informamos detalhadamente no momento do orçamento."
+      },
+      {
+        q: "É permitido levar animais de estimação (pets)?",
+        a: "Alguns dos nossos imóveis são Pet Friendly para animais de pequeno porte! Essa informação consta nas especificações de cada imóvel."
+      }
+    ];
+
+    // Global State
+    let properties = [];
+    let activeCategory = 'Todos';
+    let searchQuery = '';
+    let isAdminAuthenticated = false;
+    let editingProperty = null;
+
+    // Initialize Application Data
+    function initApp() {
+      try {
+        const saved = localStorage.getItem('rosana_properties_v1');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            properties = parsed;
+          } else {
+            properties = [...INITIAL_PROPERTIES];
+          }
+        } else {
+          properties = [...INITIAL_PROPERTIES];
+        }
+      } catch (e) {
+        properties = [...INITIAL_PROPERTIES];
+      }
+
+      // Populate Static Elements
+      document.getElementById('broker-bio').textContent = BROKER_INFO.bio;
+
+      const highlightsContainer = document.getElementById('broker-highlights');
+      highlightsContainer.innerHTML = BROKER_INFO.highlights.map(h => `
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10">
+          <h4 class="font-serif font-bold text-amber-400 text-sm mb-1">${h.title}</h4>
+          <p class="text-xs text-slate-300 leading-relaxed">${h.description}</p>
+        </div>
+      `).join('');
+
+      // WhatsApp Links Setup
+      const waGeneralMsg = encodeURIComponent("Olá Rosana Demicheli! Vi seu site de imóveis por temporada e gostaria de consultar opções disponíveis para minhas férias.");
+      const waGeneralUrl = `https://wa.me/${BROKER_INFO.whatsappNumber}?text=${waGeneralMsg}`;
+
+      document.getElementById('navbar-wa-btn').href = waGeneralUrl;
+      document.getElementById('about-wa-btn').href = waGeneralUrl;
+      document.getElementById('floating-wa-btn').href = waGeneralUrl;
+
+      renderCategoryFilters();
+      renderPropertiesGrid();
+      populateInquiryDropdown();
+      renderFaqAccordion();
+
+      lucide.createIcons();
+    }
+
+    // Save properties state to localStorage
+    function saveProperties() {
+      try {
+        localStorage.setItem('rosana_properties_v1', JSON.stringify(properties));
+      } catch (e) {
+        console.error('Error saving properties', e);
+      }
+      renderPropertiesGrid();
+      populateInquiryDropdown();
+    }
+
+    function resetPropertiesToDefault() {
+      if (confirm('Deseja restaurar a lista inicial de imóveis?')) {
+        properties = JSON.parse(JSON.stringify(INITIAL_PROPERTIES));
+        saveProperties();
+        if (isAdminAuthenticated) renderAdminDashboard();
+        alert('Imóveis restaurados com sucesso!');
+      }
+    }
+
+    // Category Filter Rendering
+    function renderCategoryFilters() {
+      const categories = ['Todos', 'Cobertura', 'Casa', 'Apartamento', 'Sobrado'];
+      const container = document.getElementById('category-filters');
+      container.innerHTML = categories.map(cat => `
+        <button
+          onclick="setCategoryFilter('${cat}')"
+          class="px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+            activeCategory === cat
+              ? 'bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/20'
+              : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'
+          }"
+        >
+          ${cat}
+        </button>
+      `).join('');
+    }
+
+    function setCategoryFilter(cat) {
+      activeCategory = cat;
+      renderCategoryFilters();
+      renderPropertiesGrid();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val.toLowerCase().trim();
+      renderPropertiesGrid();
+    }
+
+    // Render Property Cards
+    function renderPropertiesGrid() {
+      const grid = document.getElementById('properties-grid');
+      
+      const filtered = properties.filter(p => {
+        const matchesCategory = activeCategory === 'Todos' || p.category === activeCategory;
+        const matchesSearch = !searchQuery || 
+          p.title.toLowerCase().includes(searchQuery) ||
+          p.code.toLowerCase().includes(searchQuery) ||
+          p.city.toLowerCase().includes(searchQuery) ||
+          p.neighborhood.toLowerCase().includes(searchQuery);
+        return matchesCategory && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-16 text-center space-y-3 bg-white/5 rounded-3xl border border-white/10">
+            <i data-lucide="search-x" class="w-12 h-12 text-amber-400 mx-auto"></i>
+            <h3 class="text-lg font-serif font-bold text-white">Nenhum imóvel encontrado</h3>
+            <p class="text-xs text-slate-400">Tente buscar por outro termo ou selecione a categoria "Todos".</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      grid.innerHTML = filtered.map(p => {
+        const coverImg = p.images && p.images.length > 0 ? p.images[0] : "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80";
+        const waMsg = encodeURIComponent(`Olá Rosana! Gostaria de consultar disponibilidade do imóvel ${p.code} - ${p.title}.`);
+        const waUrl = `https://wa.me/${BROKER_INFO.whatsappNumber}?text=${waMsg}`;
+
+        return `
+          <div class="group bg-slate-900/90 border border-white/10 rounded-3xl overflow-hidden hover:border-amber-400/50 transition-all duration-300 hover:-translate-y-1 shadow-xl flex flex-col">
+            
+            <!-- Image & Tag -->
+            <div class="relative aspect-video overflow-hidden bg-slate-950">
+              <img
+                src="${coverImg}"
+                alt="${p.title}"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div class="absolute top-3 left-3 flex gap-2">
+                <span class="px-2.5 py-1 rounded-full bg-slate-950/80 text-amber-400 font-mono text-[10px] font-bold uppercase backdrop-blur-md border border-amber-400/30">
+                  ${p.code}
+                </span>
+                <span class="px-2.5 py-1 rounded-full bg-amber-500 text-slate-950 font-bold text-[10px] uppercase shadow">
+                  ${p.tag || p.category}
+                </span>
+              </div>
+            </div>
+
+            <!-- Card Content -->
+            <div class="p-6 space-y-4 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="text-[11px] text-amber-400 font-semibold uppercase tracking-wider flex items-center gap-1 mb-1">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                  <span>${p.neighborhood} • ${p.city}</span>
+                </div>
+                <h3 class="text-lg font-serif font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-2">
+                  ${p.title}
+                </h3>
+                <p class="text-xs text-slate-400 mt-1 line-clamp-2">
+                  ${p.subtitle || p.description}
+                </p>
+              </div>
+
+              <!-- Badges Info -->
+              <div class="grid grid-cols-3 gap-2 py-3 border-y border-white/10 text-[11px] text-slate-300 font-medium">
+                <div class="flex items-center gap-1.5">
+                  <i data-lucide="users" class="w-4 h-4 text-amber-400"></i>
+                  <span>Ate ${p.maxGuests} psoas</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <i data-lucide="bed" class="w-4 h-4 text-amber-400"></i>
+                  <span>${p.bedrooms} quartos</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <i data-lucide="car" class="w-4 h-4 text-amber-400"></i>
+                  <span>${p.parkingSpaces} vagas</span>
+                </div>
+              </div>
+
+              <!-- Price & Actions -->
+              <div class="pt-2 space-y-3">
+                <div class="flex items-baseline justify-between">
+                  <span class="text-[11px] text-slate-400">Diária a partir de:</span>
+                  <span class="text-lg font-serif font-bold text-amber-400">
+                    R$ ${(p.rates?.lowSeason || 500).toLocaleString('pt-BR')}<span class="text-xs font-sans text-slate-400 font-normal">/noite</span>
+                  </span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                  <button
+                    onclick="openPropertyModal('${p.id}')"
+                    class="w-full py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-colors cursor-pointer text-center"
+                  >
+                    Ver Detalhes
+                  </button>
+                  <a
+                    href="${waUrl}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-colors text-center flex items-center justify-center gap-1"
+                  >
+                    <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                    <span>Cotar</span>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    // Property Detail Modal Handler
+    function openPropertyModal(id) {
+      const p = properties.find(item => item.id === id);
+      if (!p) return;
+
+      document.getElementById('modal-prop-code').textContent = p.code;
+      document.getElementById('modal-prop-title').textContent = p.title;
+      document.getElementById('modal-prop-location').textContent = `${p.neighborhood}, ${p.city} • ${p.distanceToBeach}`;
+      document.getElementById('modal-description').textContent = p.description;
+      document.getElementById('modal-footer-price').textContent = `A partir de R$ ${(p.rates?.lowSeason || 500).toLocaleString('pt-BR')} / noite`;
+
+      // Main image & Thumbnails
+      const mainImg = document.getElementById('modal-main-image');
+      const imgs = p.images && p.images.length > 0 ? p.images : ["https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80"];
+      mainImg.src = imgs[0];
+
+      const thumbsContainer = document.getElementById('modal-thumbnails');
+      thumbsContainer.innerHTML = imgs.map((imgUrl, i) => `
+        <button
+          onclick="document.getElementById('modal-main-image').src = '${imgUrl}'"
+          class="w-20 h-14 rounded-lg overflow-hidden border border-white/20 hover:border-amber-400 flex-shrink-0 cursor-pointer"
+        >
+          <img src="${imgUrl}" class="w-full h-full object-cover" />
+        </button>
+      `).join('');
+
+      // Specifications Grid
+      document.getElementById('modal-specs').innerHTML = `
+        <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-center">
+          <span class="block text-slate-400 text-[10px]">Capacidade</span>
+          <span class="font-bold text-amber-400 text-sm">${p.maxGuests} Hóspedes</span>
+        </div>
+        <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-center">
+          <span class="block text-slate-400 text-[10px]">Quartos</span>
+          <span class="font-bold text-amber-400 text-sm">${p.bedrooms} Dormitórios</span>
+        </div>
+        <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-center">
+          <span class="block text-slate-400 text-[10px]">Suítes</span>
+          <span class="font-bold text-amber-400 text-sm">${p.suites || 0} Suítes</span>
+        </div>
+        <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-center">
+          <span class="block text-slate-400 text-[10px]">Banheiros</span>
+          <span class="font-bold text-amber-400 text-sm">${p.bathrooms} Banheiros</span>
+        </div>
+        <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-center">
+          <span class="block text-slate-400 text-[10px]">Garagem</span>
+          <span class="font-bold text-amber-400 text-sm">${p.parkingSpaces} Vagas</span>
+        </div>
+        <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-center">
+          <span class="block text-slate-400 text-[10px]">Área Útil</span>
+          <span class="font-bold text-amber-400 text-sm">${p.areaM2 || 100} m²</span>
+        </div>
+      `;
+
+      // Amenities List
+      document.getElementById('modal-amenities').innerHTML = (p.amenities || []).map(item => `
+        <div class="flex items-center gap-2 p-2 bg-white/5 rounded-lg border border-white/5 text-slate-200">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+          <span>${item}</span>
+        </div>
+      `).join('');
+
+      // Rates Table
+      const r = p.rates || { lowSeason: 500, midSeason: 800, highSeason: 1200, reveillon: 2000, cleaningFee: 250 };
+      document.getElementById('modal-rates-table').innerHTML = `
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center text-xs">
+          <div class="p-2 bg-slate-900/80 rounded-lg"><span class="block text-[10px] text-slate-400">Baixa Temp.</span><strong class="text-white">R$ ${r.lowSeason}</strong></div>
+          <div class="p-2 bg-slate-900/80 rounded-lg"><span class="block text-[10px] text-slate-400">Média Temp.</span><strong class="text-white">R$ ${r.midSeason}</strong></div>
+          <div class="p-2 bg-slate-900/80 rounded-lg"><span class="block text-[10px] text-slate-400">Alta Temp.</span><strong class="text-amber-400">R$ ${r.highSeason}</strong></div>
+          <div class="p-2 bg-slate-900/80 rounded-lg"><span class="block text-[10px] text-slate-400">Réveillon</span><strong class="text-amber-300">R$ ${r.reveillon}</strong></div>
+          <div class="p-2 bg-slate-900/80 rounded-lg"><span class="block text-[10px] text-slate-400">Taxa Limpeza</span><strong class="text-emerald-400">R$ ${r.cleaningFee}</strong></div>
+        </div>
+      `;
+
+      // Rules List
+      document.getElementById('modal-rules-list').innerHTML = (p.rules || [
+        "Check-in a partir das 14h | Check-out até 10h",
+        "Respeitar o horário de silêncio do condomínio",
+        "Não permitido festas ou eventos não autorizados"
+      ]).map(rule => `<li>${rule}</li>`).join('');
+
+      // Booking WA Link
+      const bookingMsg = encodeURIComponent(`Olá Rosana! Quero agendar a locação por temporada do imóvel ${p.code} (${p.title}). Poderia me enviar o contrato e dados de disponibilidade?`);
+      document.getElementById('modal-wa-booking-btn').href = `https://wa.me/${BROKER_INFO.whatsappNumber}?text=${bookingMsg}`;
+
+      document.getElementById('property-modal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closePropertyModal() {
+      document.getElementById('property-modal').classList.add('hidden');
+    }
+
+    // Inquiry Form Logic
+    function populateInquiryDropdown() {
+      const select = document.getElementById('inquiry-property-select');
+      select.innerHTML = `<option value="" class="bg-slate-900 text-slate-300">Todas as Opções / Qualquer Imóvel</option>` +
+        properties.map(p => `<option value="${p.code} - ${p.title}" class="bg-slate-900 text-slate-200">${p.code} - ${p.title} (${p.category})</option>`).join('');
+    }
+
+    function handleInquirySubmit(e) {
+      e.preventDefault();
+      const prop = document.getElementById('inquiry-property-select').value || 'Qualquer imóvel disponível';
+      const guests = document.getElementById('inquiry-guests').value || '4';
+      const checkin = document.getElementById('inquiry-checkin').value || 'A definir';
+      const checkout = document.getElementById('inquiry-checkout').value || 'A definir';
+      const notes = document.getElementById('inquiry-notes').value || 'Sem observações adicionais';
+
+      const text = `Olá Rosana Demicheli! Gostaria de solicitar um orçamento de temporada:\n\n` +
+        `• *Imóvel:* ${prop}\n` +
+        `• *Hóspedes:* ${guests} pessoas\n` +
+        `• *Check-in:* ${checkin}\n` +
+        `• *Check-out:* ${checkout}\n` +
+        `• *Observações:* ${notes}\n\n` +
+        `Aguardo seu retorno com os valores e disponibilidade!`;
+
+      window.open(`https://wa.me/${BROKER_INFO.whatsappNumber}?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    // FAQ Accordion
+    function renderFaqAccordion() {
+      const container = document.getElementById('faq-accordion');
+      container.innerHTML = FAQS.map((faq, i) => `
+        <div class="bg-slate-900/80 border border-white/10 rounded-2xl overflow-hidden">
+          <button
+            onclick="toggleFaq(${i})"
+            class="w-full p-5 text-left font-serif font-bold text-white text-sm flex items-center justify-between gap-4 hover:text-amber-400 transition-colors"
+          >
+            <span>${faq.q}</span>
+            <i id="faq-icon-${i}" data-lucide="chevron-down" class="w-5 h-5 text-amber-400 transition-transform"></i>
+          </button>
+          <div id="faq-ans-${i}" class="hidden p-5 pt-0 text-xs text-slate-300 leading-relaxed border-t border-white/5 bg-slate-950/40">
+            ${faq.a}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleFaq(i) {
+      const ans = document.getElementById(`faq-ans-${i}`);
+      const icon = document.getElementById(`faq-icon-${i}`);
+      if (ans.classList.contains('hidden')) {
+        ans.classList.remove('hidden');
+        icon.style.transform = 'rotate(180deg)';
+      } else {
+        ans.classList.add('hidden');
+        icon.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    // ================= ADMIN MANAGEMENT PORTAL =================
+    function openAdminModal() {
+      document.getElementById('admin-modal').classList.remove('hidden');
+      if (isAdminAuthenticated) {
+        renderAdminDashboard();
+      } else {
+        renderAdminLogin();
+      }
+    }
+
+    function closeAdminModal() {
+      document.getElementById('admin-modal').classList.add('hidden');
+      editingProperty = null;
+    }
+
+    function renderAdminLogin() {
+      const container = document.getElementById('admin-modal-body');
+      container.innerHTML = `
+        <div class="max-w-md mx-auto py-8 space-y-6 text-center">
+          <div class="w-16 h-16 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-400 flex items-center justify-center mx-auto">
+            <i data-lucide="key-round" class="w-8 h-8"></i>
+          </div>
+
+          <div>
+            <h4 class="text-xl font-serif font-bold text-white">Acesso Restrito</h4>
+            <p class="text-xs text-slate-400 mt-1">Digite a senha da corretora para gerenciar imóveis e uploads.</p>
+          </div>
+
+          <form onsubmit="handleAdminAuth(event)" class="space-y-4 text-left">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 uppercase mb-2">Senha de Acesso</label>
+              <input
+                id="admin-pin-input"
+                type="password"
+                placeholder="••••••••"
+                required
+                class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white text-sm focus:border-amber-400 outline-none"
+              />
+            </div>
+
+            <div id="pin-error-msg" class="hidden p-3 bg-rose-500/20 border border-rose-500/40 rounded-xl text-xs text-rose-300">
+              Senha incorreta. Tente novamente.
+            </div>
+
+            <button
+              type="submit"
+              class="w-full py-3.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-widest rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <i data-lucide="lock" class="w-4 h-4"></i>
+              <span>Acessar Painel de Gestão</span>
+            </button>
+          </form>
+        </div>
+      `;
+      lucide.createIcons();
+    }
+
+    function handleAdminAuth(e) {
+      e.preventDefault();
+      const pin = document.getElementById('admin-pin-input').value.trim();
+      if (pin === "rosana1234") {
+        isAdminAuthenticated = true;
+        renderAdminDashboard();
+      } else {
+        document.getElementById('pin-error-msg').classList.remove('hidden');
+      }
+    }
+
+    function renderAdminDashboard() {
+      const container = document.getElementById('admin-modal-body');
+
+      if (editingProperty) {
+        renderPropertyForm(container);
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="space-y-6">
+          
+          <!-- Actions Bar -->
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-white/5 border border-white/10 rounded-2xl">
+            <div>
+              <h4 class="font-serif font-bold text-white text-base">Gerenciador de Hospedagens</h4>
+              <p class="text-xs text-slate-400">Cadastre novos imóveis, altere fotos e valores ou remova cadastros.</p>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <button
+                onclick="createNewPropertyForm()"
+                class="px-4 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg flex items-center gap-2 cursor-pointer"
+              >
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                <span>Cadastrar Novo Imóvel</span>
+              </button>
+
+              <button
+                onclick="resetPropertiesToDefault()"
+                class="px-3 py-2.5 bg-white/10 hover:bg-white/20 text-slate-300 font-bold text-xs uppercase tracking-wider rounded-xl transition-colors cursor-pointer"
+                title="Restaurar padrão"
+              >
+                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Properties List Table / Grid -->
+          <div class="space-y-3">
+            ${properties.map(p => `
+              <div class="p-4 bg-slate-900 border border-white/10 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-4 w-full sm:w-auto">
+                  <img
+                    src="${p.images && p.images[0] ? p.images[0] : ''}"
+                    alt="${p.title}"
+                    class="w-16 h-12 object-cover rounded-xl border border-white/10 flex-shrink-0"
+                  />
+                  <div>
+                    <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-mono text-[10px] font-bold">
+                      ${p.code}
+                    </span>
+                    <h5 class="text-sm font-bold text-white mt-0.5 line-clamp-1">${p.title}</h5>
+                    <p class="text-xs text-slate-400">${p.category} • ${p.neighborhood} • ${p.images ? p.images.length : 0} fotos</p>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-2 w-full sm:w-auto justify-end border-t sm:border-0 pt-3 sm:pt-0 border-white/10">
+                  <button
+                    onclick="editProperty('${p.id}')"
+                    class="px-3 py-1.5 bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 font-bold text-xs rounded-lg transition-colors flex items-center gap-1 cursor-pointer"
+                  >
+                    <i data-lucide="edit" class="w-3.5 h-3.5"></i>
+                    <span>Editar</span>
+                  </button>
+                  <button
+                    onclick="deleteProperty('${p.id}')"
+                    class="px-3 py-1.5 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 font-bold text-xs rounded-lg transition-colors flex items-center gap-1 cursor-pointer"
+                  >
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                    <span>Excluir</span>
+                  </button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+
+        </div>
+      `;
+
+      lucide.createIcons();
+    }
+
+    function createNewPropertyForm() {
+      editingProperty = {
+        id: "prop-" + Date.now(),
+        code: "REF-" + Math.floor(100 + Math.random() * 900),
+        title: "",
+        subtitle: "",
+        category: "Apartamento",
+        tag: "Frente ao Mar",
+        city: "Bombinhas - SC",
+        neighborhood: "Praia de Mariscal",
+        distanceToBeach: "100m do mar",
+        maxGuests: 6,
+        bedrooms: 2,
+        suites: 1,
+        bathrooms: 2,
+        parkingSpaces: 1,
+        areaM2: 90,
+        featured: false,
+        images: [],
+        description: "",
+        amenities: ["Ar Condicionado", "Wi-Fi", "Churrasqueira a Carvão"],
+        rates: { lowSeason: 500, midSeason: 800, highSeason: 1200, reveillon: 1800, cleaningFee: 250 },
+        rules: ["Check-in: 14h | Check-out: 10h", "Proibido som alto após 22h"]
+      };
+      renderAdminDashboard();
+    }
+
+    function editProperty(id) {
+      const p = properties.find(item => item.id === id);
+      if (p) {
+        editingProperty = JSON.parse(JSON.stringify(p));
+        renderAdminDashboard();
+      }
+    }
+
+    function deleteProperty(id) {
+      if (confirm('Tem certeza que deseja excluir este imóvel?')) {
+        properties = properties.filter(p => p.id !== id);
+        saveProperties();
+        renderAdminDashboard();
+      }
+    }
+
+    function cancelEditing() {
+      editingProperty = null;
+      renderAdminDashboard();
+    }
+
+    function savePropertyForm(e) {
+      e.preventDefault();
+      if (!editingProperty) return;
+
+      const index = properties.findIndex(p => p.id === editingProperty.id);
+      if (index >= 0) {
+        properties[index] = editingProperty;
+      } else {
+        properties.unshift(editingProperty);
+      }
+
+      saveProperties();
+      editingProperty = null;
+      renderAdminDashboard();
+      alert('Imóvel salvo com sucesso!');
+    }
+
+    // Process Device File Upload (Photos from Phone Gallery or Computer)
+    function handleDeviceFileUpload(fileList) {
+      if (!fileList || fileList.length === 0 || !editingProperty) return;
+
+      const files = Array.from(fileList);
+      let count = 0;
+
+      files.forEach(file => {
+        if (!file.type.startsWith('image/')) return;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let width = img.width;
+            let height = img.height;
+            const maxDim = 1600;
+
+            if (width > maxDim || height > maxDim) {
+              if (width > height) {
+                height = Math.round((height * maxDim) / width);
+                width = maxDim;
+              } else {
+                width = Math.round((width * maxDim) / height);
+                height = maxDim;
+              }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+            if (!editingProperty.images) editingProperty.images = [];
+            editingProperty.images.push(dataUrl);
+
+            count++;
+            if (count === files.length) {
+              renderAdminDashboard();
+            }
+          };
+          img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function removePhoto(idx) {
+      if (editingProperty && editingProperty.images) {
+        editingProperty.images.splice(idx, 1);
+        renderAdminDashboard();
+      }
+    }
+
+    function setCoverPhoto(idx) {
+      if (editingProperty && editingProperty.images) {
+        const cover = editingProperty.images.splice(idx, 1)[0];
+        editingProperty.images.unshift(cover);
+        renderAdminDashboard();
+      }
+    }
+
+    // Render Form Component
+    function renderPropertyForm(container) {
+      const p = editingProperty;
+      container.innerHTML = `
+        <form onsubmit="savePropertyForm(event)" class="space-y-6 text-xs">
+          
+          <div class="flex items-center justify-between pb-4 border-b border-white/10">
+            <h4 class="text-base font-serif font-bold text-amber-400">
+              ${p.id ? 'Editar Imóvel: ' + p.code : 'Cadastrar Novo Imóvel'}
+            </h4>
+            <button
+              type="button"
+              onclick="cancelEditing()"
+              class="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-slate-300 font-bold rounded-lg cursor-pointer"
+            >
+              Cancelar
+            </button>
+          </div>
+
+          <!-- Basic Data Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-slate-300 font-semibold mb-1">Código de Referência</label>
+              <input
+                type="text"
+                value="${p.code}"
+                onchange="editingProperty.code = this.value"
+                required
+                class="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-white font-mono"
+              />
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-slate-300 font-semibold mb-1">Título do Imóvel</label>
+              <input
+                type="text"
+                value="${p.title}"
+                onchange="editingProperty.title = this.value"
+                required
+                placeholder="Ex: Cobertura Duplex de Luxo com Vista Mar"
+                class="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-white"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-slate-300 font-semibold mb-1">Categoria</label>
+              <select
+                onchange="editingProperty.category = this.value"
+                class="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-white bg-slate-900"
+              >
+                ${['Apartamento', 'Cobertura', 'Casa', 'Sobrado'].map(cat => `
+                  <option value="${cat}" ${p.category === cat ? 'selected' : ''}>${cat}</option>
+                `).join('')}
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-slate-300 font-semibold mb-1">Cidade</label>
+              <input
+                type="text"
+                value="${p.city}"
+                onchange="editingProperty.city = this.value"
+                class="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-white"
+              />
+            </div>
+
+            <div>
+              <label class="block text-slate-300 font-semibold mb-1">Bairro / Praia</label>
+              <input
+                type="text"
+                value="${p.neighborhood}"
+                onchange="editingProperty.neighborhood = this.value"
+                class="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-white"
+              />
+            </div>
+          </div>
+
+          <!-- Specs Numeric Grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-6 gap-3">
+            <div>
+              <label class="block text-slate-300 font-semibold mb-1">Hóspedes</label>
+              <input
+                type="number"
+                value="${p.maxGuests}"
+                onchange="editingProperty.maxGuests = parseInt(this.value)"
+                class="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-white"
+              />
+            </div>
+            <div>
+              <label class="block text-slate-300 font-semibold mb-1">Quartos</label>
+              <input
+                type="number"
+                value="${p.bedrooms}"
+                onchange="editingProperty.bedrooms = parseInt(this.value)"
+                class="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-white"
+              />
+            </div>
+            <div>
+              <label class="block text-slate-300 font-semibold mb-1">Suítes</label>
+              <input
+                type="number"
+                value="${p.suites || 0}"
+                onchange="editingProperty.suites = parseInt(this.value)"
+                class="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-white"
+              />
+            </div>
+            <div>
+              <label class="block text-slate-300 font-semibold mb-1">Banheiros</label>
+              <input
+                type="number"
+                value="${p.bathrooms}"
+                onchange="editingProperty.bathrooms = parseInt(this.value)"
+                class="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-white"
+              />
+            </div>
+            <div>
+              <label class="block text-slate-300 font-semibold mb-1">Vagas</label>
+              <input
+                type="number"
+                value="${p.parkingSpaces}"
+                onchange="editingProperty.parkingSpaces = parseInt(this.value)"
+                class="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-white"
+              />
+            </div>
+            <div>
+              <label class="block text-slate-300 font-semibold mb-1">Área (m²)</label>
+              <input
+                type="number"
+                value="${p.areaM2 || 100}"
+                onchange="editingProperty.areaM2 = parseInt(this.value)"
+                class="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-white"
+              />
+            </div>
+          </div>
+
+          <!-- DEVICE UPLOAD ZONE -->
+          <div class="space-y-4 bg-white/5 p-5 rounded-2xl border border-white/10">
+            <div class="flex items-center justify-between pb-2 border-b border-white/10">
+              <div>
+                <h5 class="font-serif font-bold text-amber-400 uppercase text-xs">Fotos do Imóvel (Upload do Dispositivo)</h5>
+                <p class="text-[11px] text-slate-400">Selecione fotos salvas na galeria do seu celular ou computador.</p>
+              </div>
+            </div>
+
+            <!-- Upload Dropzone -->
+            <label class="border-2 border-dashed border-amber-400/40 hover:border-amber-400 bg-amber-500/5 hover:bg-amber-500/10 p-6 rounded-2xl text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-2 block">
+              <i data-lucide="upload-cloud" class="w-8 h-8 text-amber-400"></i>
+              <span class="font-bold text-white text-xs">Clique aqui para selecionar fotos do seu Celular ou Computador</span>
+              <span class="text-[11px] text-slate-400">Pode escolher múltiplos arquivos (JPG, PNG, WEBP)</span>
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onchange="handleDeviceFileUpload(this.files)"
+                class="hidden"
+              />
+            </label>
+
+            <!-- Rendered Photos List -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+              ${(p.images || []).map((img, idx) => `
+                <div class="relative group aspect-video rounded-xl overflow-hidden bg-slate-950 border border-white/10">
+                  <img src="${img}" class="w-full h-full object-cover" />
+                  
+                  ${idx === 0 ? `
+                    <span class="absolute top-2 left-2 px-2 py-0.5 bg-amber-500 text-slate-950 font-bold text-[9px] uppercase rounded">Capa</span>
+                  ` : `
+                    <button
+                      type="button"
+                      onclick="setCoverPhoto(${idx})"
+                      class="absolute top-2 left-2 px-2 py-0.5 bg-slate-900/80 hover:bg-amber-500 hover:text-slate-950 text-white font-bold text-[9px] uppercase rounded transition-colors"
+                    >
+                      Tornar Capa
+                    </button>
+                  `}
+
+                  <button
+                    type="button"
+                    onclick="removePhoto(${idx})"
+                    class="absolute top-2 right-2 p-1 bg-rose-600 text-white rounded-lg opacity-80 hover:opacity-100"
+                  >
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Rates Inputs -->
+          <div class="space-y-2 bg-white/5 p-4 rounded-2xl border border-white/10">
+            <h5 class="font-serif font-bold text-amber-400 uppercase text-xs">Valores Estimados das Diárias</h5>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+              <div>
+                <label class="block text-slate-300 text-[10px]">Baixa Temp.</label>
+                <input
+                  type="number"
+                  value="${p.rates?.lowSeason || 500}"
+                  onchange="editingProperty.rates.lowSeason = parseInt(this.value)"
+                  class="w-full px-2 py-1.5 rounded-lg bg-white/10 border border-white/20 text-white"
+                />
+              </div>
+              <div>
+                <label class="block text-slate-300 text-[10px]">Média Temp.</label>
+                <input
+                  type="number"
+                  value="${p.rates?.midSeason || 800}"
+                  onchange="editingProperty.rates.midSeason = parseInt(this.value)"
+                  class="w-full px-2 py-1.5 rounded-lg bg-white/10 border border-white/20 text-white"
+                />
+              </div>
+              <div>
+                <label class="block text-slate-300 text-[10px]">Alta Temp.</label>
+                <input
+                  type="number"
+                  value="${p.rates?.highSeason || 1200}"
+                  onchange="editingProperty.rates.highSeason = parseInt(this.value)"
+                  class="w-full px-2 py-1.5 rounded-lg bg-white/10 border border-white/20 text-white"
+                />
+              </div>
+              <div>
+                <label class="block text-slate-300 text-[10px]">Réveillon</label>
+                <input
+                  type="number"
+                  value="${p.rates?.reveillon || 2000}"
+                  onchange="editingProperty.rates.reveillon = parseInt(this.value)"
+                  class="w-full px-2 py-1.5 rounded-lg bg-white/10 border border-white/20 text-white"
+                />
+              </div>
+              <div>
+                <label class="block text-slate-300 text-[10px]">Taxa Limpeza</label>
+                <input
+                  type="number"
+                  value="${p.rates?.cleaningFee || 250}"
+                  onchange="editingProperty.rates.cleaningFee = parseInt(this.value)"
+                  class="w-full px-2 py-1.5 rounded-lg bg-white/10 border border-white/20 text-white"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">Descrição Completa</label>
+            <textarea
+              rows="4"
+              onchange="editingProperty.description = this.value"
+              class="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-white resize-none"
+            >${p.description}</textarea>
+          </div>
+
+          <!-- Submit Bar -->
+          <div class="pt-4 border-t border-white/10 flex items-center justify-end gap-3">
+            <button
+              type="button"
+              onclick="cancelEditing()"
+              class="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-slate-300 font-bold rounded-xl cursor-pointer"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              class="px-6 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl shadow-lg cursor-pointer flex items-center gap-2"
+            >
+              <i data-lucide="save" class="w-4 h-4"></i>
+              <span>Salvar Imóvel</span>
+            </button>
+          </div>
+
+        </form>
+      `;
+
+      lucide.createIcons();
+    }
+
+    // Run on Page Load
+    window.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
