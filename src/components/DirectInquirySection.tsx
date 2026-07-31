@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MessageCircle, Sparkles, CheckCircle2 } from 'lucide-react';
 import { buildWhatsAppLink } from '../data/brokerInfo';
 import { PROPERTIES } from '../data/properties';
+import { saveInquiryToSupabase } from '../lib/supabase';
 
 interface DirectInquirySectionProps {
   initialPropertyCode?: string;
@@ -18,6 +19,17 @@ export const DirectInquirySection: React.FC<DirectInquirySectionProps> = ({ init
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Save inquiry to Supabase database if configured
+    saveInquiryToSupabase({
+      name,
+      phone,
+      checkIn,
+      checkOut,
+      guests: Number(guests) || 1,
+      propertyCode,
+      notes,
+    });
 
     let message = `Olá Rosana Demicheli! Gostaria de solicitar um orçamento para locação por temporada:\n\n`;
     message += `👤 *Nome:* ${name || 'Não informado'}\n`;

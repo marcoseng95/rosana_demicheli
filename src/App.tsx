@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Property } from './types';
 import { PROPERTIES } from './data/properties';
 import { Navbar } from './components/Navbar';
@@ -12,6 +12,7 @@ import { FaqSection } from './components/FaqSection';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { AdminPortalModal } from './components/AdminPortalModal';
+import { fetchPropertiesFromSupabase, savePropertyToSupabase, deletePropertyFromSupabase, isSupabaseConfigured } from './lib/supabase';
 
 export default function App() {
   const [properties, setProperties] = useState<Property[]>(() => {
@@ -31,7 +32,41 @@ export default function App() {
   const [inquiryPropertyCode, setInquiryPropertyCode] = useState<string>('');
   const [adminOpen, setAdminOpen] = useState(false);
 
+  // Load live properties from Supabase if configured
+  useEffect(() => {
+    if (!isSupabaseConfigured) return;
+
+    let isMounted = true;
+    fetchPropertiesFromSupabase().then((supabaseProps) => {
+      if (isMounted && supabaseProps && supabaseProps.length > 0) {
+        setProperties(supabaseProps);
+        try {
+          localStorage.setItem('rosana_properties_v1', JSON.stringify(supabaseProps));
+        } catch (e) {
+          console.error('Error saving properties to local storage', e);
+        }
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const handleUpdateProperties = (updatedProperties: Property[]) => {
+    // Detect added/modified or deleted properties and update Supabase
+    if (isSupabaseConfigured) {
+      const currentIds = new Set(updatedProperties.map(p => p.id));
+      properties.forEach(oldProp => {
+        if (!currentIds.has(oldProp.id)) {
+          deletePropertyFromSupabase(oldProp.id);
+        }
+      });
+      updatedProperties.forEach(p => {
+        savePropertyToSupabase(p);
+      });
+    }
+
     setProperties(updatedProperties);
     try {
       localStorage.setItem('rosana_properties_v1', JSON.stringify(updatedProperties));
